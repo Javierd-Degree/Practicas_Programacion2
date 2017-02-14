@@ -40,6 +40,9 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <commandLine>-g -Wall -fstack-protector-all</commandLine>
+        </cTool>
       </compileType>
       <item path="graph.c" ex="false" tool="0" flavor2="0">
       </item>

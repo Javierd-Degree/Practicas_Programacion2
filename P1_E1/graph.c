@@ -95,7 +95,7 @@ Graph *graph_addNode(Graph *g, const Node *n){
     return g;
 }
 
-int find_node_index(Graph *g, int nId1){
+int find_node_index(const Graph *g, int nId1){
     int i;
     if (g == NULL) return -1;
     for(i=0; i<g->nNodes; i++){
@@ -115,7 +115,7 @@ Graph *graph_addEdge(Graph *g, const int nId1, const int nId2){
     return g;
 }
 
-/*Node *graph_getNode(const Graph *g, int nId){
+Node *graph_getNode(const Graph *g, int nId){
     int i;
     if (g == NULL) return NULL;
     for(i=0; i<g->nNodes; i++){
@@ -136,21 +136,21 @@ Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     
     if(g->conexion[pos1][pos2] || g->conexion[pos2][pos1]) return TRUE;
     return FALSE;
-} */
+}
 
 void main(){
 
-    /*Node *n1, *n2;
+    Node *n1, *n2;
     n1 = node_ini();
     node_setName(n1, "topotamadre");
     node_setId(n1, 21);
     n2 = node_ini();
     node_setName(n2, "Hola");
-    node_setId(n2, 69);*/
+    node_setId(n2, 69);
     
     Graph *g;
     g = graph_ini();
-    /*graph_addNode(g, n1);
+    graph_addNode(g, n1);
     graph_addNode(g, n2);
     
     int nNodes = graph_getNnodes(g);
@@ -166,7 +166,7 @@ void main(){
     
     
     node_destroy(n1);
-    node_destroy(n2);*/
+    node_destroy(n2);
     graph_destroy(g);
 }
    

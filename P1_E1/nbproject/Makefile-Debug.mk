@@ -41,7 +41,7 @@ OBJECTFILES= \
 
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-g -Wall -fstack-protector-all
 
 # CC Compiler Flags
 CCFLAGS=
