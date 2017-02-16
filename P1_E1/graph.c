@@ -138,36 +138,64 @@ Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     return FALSE;
 }
 
-void main(){
-
-    Node *n1, *n2;
-    n1 = node_ini();
-    node_setName(n1, "topotamadre");
-    node_setId(n1, 21);
-    n2 = node_ini();
-    node_setName(n2, "Hola");
-    node_setId(n2, 69);
-    
-    Graph *g;
-    g = graph_ini();
-    graph_addNode(g, n1);
-    graph_addNode(g, n2);
-    
-    int nNodes = graph_getNnodes(g);
-    int *Ids, i;
-    printf("Numero de nodos: %d\n", nNodes);
-    Ids = graph_getNodeIds(g);
-    for(i=0; i< nNodes; i++){
-        printf("ID : %d\n", Ids[i]);
+int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
+    int i, posNode, numConex = 0;
+    if(g == NULL) return -1;
+    posNode = find_node_index(g, fromId);
+    //Revisamos las conexiones mirand toda la fila del nodo
+    for(i=0; i<g->nNodes; i++){
+        if(g->conexion[posNode][i] == TRUE){
+            numConex ++;
+        }
     }
-    
-    graph_addEdge(g, node_getId(n1), node_getId(n2));
-    printf("Numero de enlaces: %d\n", graph_getNedges(g));
-    
-    
-    node_destroy(n1);
-    node_destroy(n2);
-    graph_destroy(g);
+    return numConex;
 }
-   
-//Hola
+
+int* graph_getConnectionsFrom(const Graph * g, const int fromId){
+    int i, posNode, numConex, addedNodes, *listConex;
+    if(g == NULL) return NULL;
+    numConex = graph_getNumberOfConnectionsFrom(g, fromId);
+    if(numConex == 0) return NULL;
+    listConex = (int *)malloc(sizeof(int)*numConex);
+    if(listConex == NULL) return NULL;
+    posNode = find_node_index(g, fromId);
+    //Revisamos las conexiones mirand toda la fila del nodo
+    for(i=0, addedNodes=0; i<g->nNodes; i++){
+        if(g->conexion[posNode][i] == TRUE){
+            listConex[addedNodes] = node_getId(g->dat[i]);
+            addedNodes++;
+        }
+    }
+    return listConex;
+}
+
+int graph_getNumberOfConnectionsTo(const Graph * g, const int fromId){
+    int i, posNode, numConex = 0;
+    if(g == NULL) return -1;
+    posNode = find_node_index(g, fromId);
+    //Revisamos las conexiones mirand toda la fila del nodo
+    for(i=0; i<g->nNodes; i++){
+        if(g->conexion[i][posNode] == TRUE){
+            numConex ++;
+        }
+    }
+    return numConex;
+}
+
+int* graph_getConnectionsTo(const Graph * g, const int fromId){
+    int i, posNode, numConex, addedNodes, *listConex;
+    if(g == NULL) return NULL;
+    numConex = graph_getNumberOfConnectionsFrom(g, fromId);
+    if(numConex == 0) return NULL;
+    listConex = (int *)malloc(sizeof(int)*numConex);
+    if(listConex == NULL) return NULL;
+    posNode = find_node_index(g, fromId);
+    //Revisamos las conexiones mirand toda la fila del nodo
+    for(i=0, addedNodes=0; i<g->nNodes; i++){
+        if(g->conexion[i][posNode] == TRUE){
+            listConex[addedNodes] = node_getId(g->dat[i]);
+            addedNodes++;
+        }
+    }
+    return listConex;
+}
