@@ -199,3 +199,19 @@ int* graph_getConnectionsTo(const Graph * g, const int fromId){
     }
     return listConex;
 }
+int graph_print(FILE *pf, const Graph *g){
+        int i,j,n1,nt,n2;
+        nt=0;
+        n1=fprintf(pf,"N= %d E= %d \n",graph_getNedges(g),graph_getNnodes(g));
+        for(i=0;i<(g->nNodes);i++){
+            n2=fprintf(pf,"[ %d , %s]-> ", node_getId(g->dat[i]),node_getName(g->dat[i]));
+            for(j=0;j<g->nNodes;j++){
+            fprintf(pf,"%d", g->conexion[i][j]);
+            }
+            fprintf(pf,"\n");
+            nt=nt+n2;
+        }
+        nt=nt+n1+g->nNodes;
+        
+    return nt;
+}

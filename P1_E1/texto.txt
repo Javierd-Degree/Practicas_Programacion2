@@ -1,0 +1,12 @@
+N= 2 E= 3 
+[ 21 , topotamadre]-> 010
+[ 69 , Hola]-> 000
+[ 99 , Prueba]-> 100
+N= 2 E= 3 
+[ 21 , topotamadre]-> 010
+[ 69 , Hola]-> 000
+[ 99 , Prueba]-> 100
+N= 2 E= 3 
+[ 21 , topotamadre]-> 010
+[ 69 , Hola]-> 000
+[ 99 , Prueba]-> 100

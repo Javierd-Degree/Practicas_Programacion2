@@ -40,10 +40,18 @@ void main(){
     printf("Primera conexión de 1 es con: %d\n", graph_getConnectionsFrom(g, node_getId(n1))[0]);
     
     printf("Numero de conexiones a 1: %d\n", graph_getNumberOfConnectionsTo(g, node_getId(n1)));
-    printf("Primera conexión a 1 es con: %d", graph_getConnectionsTo(g, node_getId(n1))[0]);
+    printf("Primera conexión a 1 es con: %d\n", graph_getConnectionsTo(g, node_getId(n1))[0]);
+    
+    FILE *f;
+    f=fopen("texto.txt", "a");
+    
+    int n=graph_print(f,g);
+    printf("numero de caracteres escritos : %d",n);
+    
     
     
     node_destroy(n1);
     node_destroy(n2);
+    node_destroy(n3);
     graph_destroy(g);
 }
