@@ -200,18 +200,20 @@ int* graph_getConnectionsTo(const Graph * g, const int fromId){
     return listConex;
 }
 int graph_print(FILE *pf, const Graph *g){
-        int i,j,n1,nt,n2;
+        int i,j,n1,nt,n2,n3;
         nt=0;
         n1=fprintf(pf,"N= %d E= %d \n",graph_getNedges(g),graph_getNnodes(g));
         for(i=0;i<(g->nNodes);i++){
             n2=fprintf(pf,"[ %d , %s]-> ", node_getId(g->dat[i]),node_getName(g->dat[i]));
+            n3=0;
             for(j=0;j<g->nNodes;j++){
             fprintf(pf,"%d", g->conexion[i][j]);
+            n3++;
             }
             fprintf(pf,"\n");
-            nt=nt+n2;
+            nt=nt+n2+n3;
         }
-        nt=nt+n1+g->nNodes;
+        nt=nt+n1;
         
     return nt;
 }
