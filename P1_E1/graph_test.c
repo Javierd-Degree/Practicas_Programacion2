@@ -1,4 +1,3 @@
-
 /* 
  * File:   graph_test.c
  * Author: Profesores de PROG2
@@ -26,7 +25,6 @@ Graph * read_graph_from_file(char * filename){
 	}
 	in = (FILE*) fopen(filename, "r");
 	if (in == NULL){
-                printf("FALLO AL ABRIR\n");
 		graph_destroy(g);
 		return NULL;
 	}
@@ -97,7 +95,6 @@ int format_graph(FILE * file, const Graph * g, int (*node_print_function)(FILE *
 		c += ctemp;
 		/* and print the connections to this node */
 		n2=graph_getNumberOfConnectionsTo(g, ids[i]);
-                printf("Conectado a %d nodos.\n", n2);
 		conn = graph_getConnectionsTo(g, ids[i]);
 		if (n2 > 0){
 			c += fprintf(file, "\n\t connected to ");
@@ -121,7 +118,6 @@ int format_graph(FILE * file, const Graph * g, int (*node_print_function)(FILE *
 
 		/* and also the connections from this node */
 		n2=graph_getNumberOfConnectionsFrom(g, ids[i]);
-                printf("%d nodos conectados a %d", n2, ids[i]);
 		conn = graph_getConnectionsFrom(g, ids[i]);
 		if (n2 > 0){
 			c += fprintf(file, "\n\t connected from ");
@@ -152,7 +148,7 @@ int format_graph(FILE * file, const Graph * g, int (*node_print_function)(FILE *
 
 /*
  * 
- 
+ */
 int main(int argc, char** argv) {
 
 	Graph * g = NULL;
@@ -170,4 +166,4 @@ int main(int argc, char** argv) {
 	graph_destroy(g);
 
     return EXIT_SUCCESS;
-}*/
+}

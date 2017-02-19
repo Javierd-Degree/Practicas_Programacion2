@@ -20,7 +20,6 @@ void node_destroy(Node *n){
     free(n);
 }
 
-//TODO Preguntar si hay que copiar
 int node_getId(const Node *n){
     if(n == NULL) return -1;
     return n->id;
