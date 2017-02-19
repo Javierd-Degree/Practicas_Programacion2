@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/graph.o \
+	${OBJECTDIR}/graph_test.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/node.o
 
@@ -68,6 +69,11 @@ ${OBJECTDIR}/graph.o: graph.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph.o graph.c
+
+${OBJECTDIR}/graph_test.o: graph_test.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph_test.o graph_test.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
