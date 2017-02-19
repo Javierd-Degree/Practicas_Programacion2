@@ -131,20 +131,22 @@ Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     int pos1, pos2;
     pos1 = find_node_index(g, nId1);
     pos2 = find_node_index(g, nId2);
+    if(pos1 == -1 || pos2 == -1) return FALSE; //Por si alguno no existe
     
     if(pos1 == -1 || pos2 == -1) return FALSE;
-    
-    if(g->conexion[pos1][pos2] || g->conexion[pos2][pos1]) return TRUE;
+   
+    if(g->conexion[pos1][pos2]) return TRUE;
     return FALSE;
 }
 
 int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
-    int i, posNode, numConex = 0;
+    int i, toId, numConex = 0;
     if(g == NULL) return -1;
-    posNode = find_node_index(g, fromId);
     //Revisamos las conexiones mirando toda la fila del nodo
     for(i=0; i<g->nNodes; i++){
-        if(g->conexion[posNode][i] == TRUE){
+        toId = node_getId(g->dat[i]);
+        if(toId == -1) continue; //El nodo no es válido, lo saltamos
+        if(graph_areConnected(g, fromId, toId) == TRUE){
             numConex ++;
         }
     }
@@ -152,17 +154,19 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
 }
 
 int* graph_getConnectionsFrom(const Graph * g, const int fromId){
-    int i, posNode, numConex, addedNodes, *listConex;
+    int i, numConex, addedNodes, toId, *listConex;
     if(g == NULL) return NULL;
     numConex = graph_getNumberOfConnectionsFrom(g, fromId);
-    if(numConex == 0) return NULL;
+    if(numConex == 0 || numConex == -1) return NULL;
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
-    posNode = find_node_index(g, fromId);
+    
     //Revisamos las conexiones mirando toda la fila del nodo
     for(i=0, addedNodes=0; i<g->nNodes; i++){
-        if(g->conexion[posNode][i] == TRUE){
-            listConex[addedNodes] = node_getId(g->dat[i]);
+        toId = node_getId(g->dat[i]);
+        if(toId == -1) continue; //El nodo no es válido, lo saltamos
+        if(graph_areConnected(g, fromId, toId)){
+            listConex[addedNodes] = toId;
             addedNodes++;
         }
     }
@@ -170,12 +174,13 @@ int* graph_getConnectionsFrom(const Graph * g, const int fromId){
 }
 
 int graph_getNumberOfConnectionsTo(const Graph * g, const int fromId){
-    int i, posNode, numConex = 0;
+    int i, toId, numConex;
     if(g == NULL) return -1;
-    posNode = find_node_index(g, fromId);
     //Revisamos las filas de la matriz en la columna del nodo
-    for(i=0; i<g->nNodes; i++){
-        if(g->conexion[i][posNode] == TRUE){
+    for(i=0, numConex=0; i<g->nNodes; i++){
+        toId = node_getId(g->dat[i]);
+        if(toId == -1) continue; //El nodo no es válido, lo saltamos
+        if(graph_areConnected(g, toId, fromId)){
             numConex ++;
         }
     }
@@ -183,17 +188,18 @@ int graph_getNumberOfConnectionsTo(const Graph * g, const int fromId){
 }
 
 int* graph_getConnectionsTo(const Graph * g, const int fromId){
-    int i, posNode, numConex, addedNodes, *listConex;
+    int i, toId, numConex, addedNodes, *listConex;
     if(g == NULL) return NULL;
     numConex = graph_getNumberOfConnectionsFrom(g, fromId);
-    if(numConex == 0) return NULL;
+    if(numConex == 0 || numConex == -1) return NULL;
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
-    posNode = find_node_index(g, fromId);
     //Revisamos las filas de la matriz en la columna del nodo
     for(i=0, addedNodes=0; i<g->nNodes; i++){
-        if(g->conexion[i][posNode] == TRUE){
-            listConex[addedNodes] = node_getId(g->dat[i]);
+        toId = node_getId(g->dat[i]);
+        if(toId == -1) continue; //El nodo no es válido, lo saltamos
+        if(graph_areConnected(g, toId, fromId) == TRUE){
+            listConex[addedNodes] = toId;
             addedNodes++;
         }
     }
