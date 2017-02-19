@@ -4,19 +4,18 @@
 #include "node.h"
 #include "graph.h"
 
-
-void main(){
+/*void main(){
 
     Node *n1, *n2, *n3;
     n1 = node_ini();
-    node_setName(n1, "topotamadre");
-    node_setId(n1, 21);
+    node_setName(n1, "a");
+    node_setId(n1, 1);
     n2 = node_ini();
-    node_setName(n2, "Hola");
-    node_setId(n2, 69);
+    node_setName(n2, "b");
+    node_setId(n2, 2);
     n3 = node_ini();
-    node_setName(n3, "Prueba");
-    node_setId(n3, 99);
+    node_setName(n3, "c");
+    node_setId(n3, 3);
     
     Graph *g;
     g = graph_ini();
@@ -33,7 +32,7 @@ void main(){
     }
     
     graph_addEdge(g, node_getId(n1), node_getId(n2));
-    graph_addEdge(g, node_getId(n3), node_getId(n1));
+
     printf("Numero de enlaces: %d\n", graph_getNedges(g));
     
     printf("Numero de conexiones desde 1: %d\n", graph_getNumberOfConnectionsFrom(g, node_getId(n1)));
@@ -43,10 +42,10 @@ void main(){
     printf("Primera conexión a 1 es con: %d\n", graph_getConnectionsTo(g, node_getId(n1))[0]);
     
     FILE *f;
-    f=fopen("texto.txt", "a");
+    f = fopen("texto.txt", "w");
     
-    int n=graph_print(f,g);
-    printf("numero de caracteres escritos : %d",n);
+    int n = graph_print(f,g);
+    printf("numero de caracteres escritos : %d", n);
     
     
     
@@ -54,4 +53,4 @@ void main(){
     node_destroy(n2);
     node_destroy(n3);
     graph_destroy(g);
-}
+}*/

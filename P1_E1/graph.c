@@ -142,7 +142,7 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
     int i, posNode, numConex = 0;
     if(g == NULL) return -1;
     posNode = find_node_index(g, fromId);
-    //Revisamos las conexiones mirand toda la fila del nodo
+    //Revisamos las conexiones mirando toda la fila del nodo
     for(i=0; i<g->nNodes; i++){
         if(g->conexion[posNode][i] == TRUE){
             numConex ++;
@@ -159,7 +159,7 @@ int* graph_getConnectionsFrom(const Graph * g, const int fromId){
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
     posNode = find_node_index(g, fromId);
-    //Revisamos las conexiones mirand toda la fila del nodo
+    //Revisamos las conexiones mirando toda la fila del nodo
     for(i=0, addedNodes=0; i<g->nNodes; i++){
         if(g->conexion[posNode][i] == TRUE){
             listConex[addedNodes] = node_getId(g->dat[i]);
@@ -173,7 +173,7 @@ int graph_getNumberOfConnectionsTo(const Graph * g, const int fromId){
     int i, posNode, numConex = 0;
     if(g == NULL) return -1;
     posNode = find_node_index(g, fromId);
-    //Revisamos las conexiones mirand toda la fila del nodo
+    //Revisamos las filas de la matriz en la columna del nodo
     for(i=0; i<g->nNodes; i++){
         if(g->conexion[i][posNode] == TRUE){
             numConex ++;
@@ -190,7 +190,7 @@ int* graph_getConnectionsTo(const Graph * g, const int fromId){
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
     posNode = find_node_index(g, fromId);
-    //Revisamos las conexiones mirand toda la fila del nodo
+    //Revisamos las filas de la matriz en la columna del nodo
     for(i=0, addedNodes=0; i<g->nNodes; i++){
         if(g->conexion[i][posNode] == TRUE){
             listConex[addedNodes] = node_getId(g->dat[i]);
@@ -199,21 +199,17 @@ int* graph_getConnectionsTo(const Graph * g, const int fromId){
     }
     return listConex;
 }
+
 int graph_print(FILE *pf, const Graph *g){
-        int i,j,n1,nt,n2,n3;
-        nt=0;
-        n1=fprintf(pf,"N= %d E= %d \n",graph_getNedges(g),graph_getNnodes(g));
+        int i, j, numChar;
+        numChar=0;
+        numChar+=fprintf(pf,"N=%d, E=%d:\n", graph_getNnodes(g), graph_getNedges(g));
         for(i=0;i<(g->nNodes);i++){
-            n2=fprintf(pf,"[ %d , %s]-> ", node_getId(g->dat[i]),node_getName(g->dat[i]));
-            n3=0;
+            numChar+=fprintf(pf,"[%d , %s]->", node_getId(g->dat[i]), node_getName(g->dat[i]));
             for(j=0;j<g->nNodes;j++){
-            fprintf(pf,"%d", g->conexion[i][j]);
-            n3++;
+                numChar+=fprintf(pf,"%d ", g->conexion[i][j]);
             }
-            fprintf(pf,"\n");
-            nt=nt+n2+n3;
+            numChar+=fprintf(pf,"\n");
         }
-        nt=nt+n1;
-        
-    return nt;
+    return numChar;
 }

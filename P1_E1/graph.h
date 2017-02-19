@@ -62,7 +62,7 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId);
 int* graph_getConnectionsFrom(const Graph * g, const int fromId);
 /* Devuelve el número de conexiones que se conocen en el grafo hacia un nodo, si hay algún error devuelve -1 */
 int graph_getNumberOfConnectionsTo(const Graph * g, const int toId);
-/* Devuelve una lista con los ids de los nodos conectados desde un nodo dado, si hay algún error devuelve NULL*/
+/* Devuelve una lista con los ids de los nodos conectados hacia un nodo dado, si hay algún error devuelve NULL*/
 int* graph_getConnectionsTo(const Graph * g, const int toId);
 
 /* Imprime en pf los datos de un grafo, devuelve el número de caracteres que se han escrito con éxito (mirar
