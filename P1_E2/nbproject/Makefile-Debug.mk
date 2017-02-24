@@ -37,8 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/graph.o \
 	${OBJECTDIR}/graph_test.o \
-	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/node.o
+	${OBJECTDIR}/node.o \
+	${OBJECTDIR}/p1_e2.o
 
 
 # C Compiler Flags
@@ -75,15 +75,15 @@ ${OBJECTDIR}/graph_test.o: graph_test.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph_test.o graph_test.c
 
-${OBJECTDIR}/main.o: main.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
-
 ${OBJECTDIR}/node.o: node.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/node.o node.c
+
+${OBJECTDIR}/p1_e2.o: p1_e2.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p1_e2.o p1_e2.c
 
 # Subprojects
 .build-subprojects:

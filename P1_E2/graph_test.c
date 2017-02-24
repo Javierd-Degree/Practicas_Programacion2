@@ -146,9 +146,8 @@ int format_graph(FILE * file, const Graph * g, int (*node_print_function)(FILE *
 	return c;
 }
 
-/*
- * 
- */
+/* Para que funcione el main Principal
+
 int main(int argc, char** argv) {
 
 	Graph * g = NULL;
@@ -167,3 +166,4 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
+ */

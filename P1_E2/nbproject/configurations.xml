@@ -17,8 +17,8 @@
                    projectFiles="true">
       <itemPath>graph.c</itemPath>
       <itemPath>graph_test.c</itemPath>
-      <itemPath>main.c</itemPath>
       <itemPath>node.c</itemPath>
+      <itemPath>p1_e2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -51,11 +51,11 @@
       </item>
       <item path="graph_test.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="node.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p1_e2.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="types.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -86,11 +86,11 @@
       </item>
       <item path="graph_test.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="node.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p1_e2.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="types.h" ex="false" tool="3" flavor2="0">
       </item>
