@@ -71,7 +71,7 @@ Bool stack_isFull(const Stack *s){
 int stack_print(FILE *f, const Stack *s){
     int i, numChar, temp;
     if(s == NULL || f == NULL) return -1;
-    for(i=s->top; i>=0; i--){
+    for(i=(s->top -1); i>=0; i--){
         temp = element_print(f, s->item[i]);
         if(temp == -1) return -1;
         /*Si falla al imprimir un elemento, ya ha fallado*/
