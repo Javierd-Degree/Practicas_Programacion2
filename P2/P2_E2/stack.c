@@ -28,7 +28,6 @@ Stack * stack_push(Stack *s, const Element *e){
     if(s==NULL || e==NULL || stack_isFull(s)) return NULL;
     Element *ec;
     ec = element_copy(e);
-    if (ec == NULL )return NULL;
     s->item[s->top] = ec;
     s->top ++;
     return s;
