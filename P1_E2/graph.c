@@ -46,7 +46,7 @@ void graph_destroy(Graph *g){
     
     for(i=0; i<g->nNodes; i++){
         if(g->dat[i] != NULL){
-            free(g->dat[i]);
+            node_destroy(g->dat[i]);
         }
     }
     free(g);
