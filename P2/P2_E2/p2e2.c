@@ -70,76 +70,6 @@ Graph * read_graph_from_file(char * filename){
 	return g;
 }
 
-int format_graph(FILE * file, const Graph * g, int (*node_print_function)(FILE *, const Node *)){
-	int i, j, n, c, ctemp, n2;
-	Node* node;
-	int* ids;
-	int* conn;
-	
-	/* For each node: */
-	n = graph_getNnodes(g);
-	ids = graph_getNodeIds(g);
-	for (i=0; i < n; i++){
-		/* we print the node */
-		node = graph_getNode(g, ids[i]);
-		/* using the function pointer */
-		ctemp = node_print_function(file, node);
-		if (ctemp <= 0){
-			return c;
-		}
-		c += ctemp;
-		/* and print the connections to this node */
-		n2=graph_getNumberOfConnectionsTo(g, ids[i]);
-		conn = graph_getConnectionsTo(g, ids[i]);
-		if (n2 > 0){
-			c += fprintf(file, "\n\t connected to ");
-			/* using the function pointer */
-			ctemp = node_print_function(file, graph_getNode(g, conn[0]));
-			if (ctemp <= 0){
-				return c;
-			}
-			c += ctemp;
-			for (j=1; j < n2; j++){
-				c += fprintf(file, ", ");
-				/* using the function pointer */
-				ctemp = node_print_function(file, graph_getNode(g, conn[j]));
-				if (ctemp <= 0){
-					return c;
-				}
-				c += ctemp;
-			}
-		}
-		free(conn);
-
-		/* and also the connections from this node */
-		n2=graph_getNumberOfConnectionsFrom(g, ids[i]);
-		conn = graph_getConnectionsFrom(g, ids[i]);
-		if (n2 > 0){
-			c += fprintf(file, "\n\t connected from ");
-			/* using the function pointer */
-			ctemp = node_print_function(file, graph_getNode(g, conn[0]));
-			if (ctemp <= 0){
-				return c;
-			}
-			c += ctemp;
-			for (j=1; j < n2; j++){
-				c += fprintf(file, ", ");
-				/* using the function pointer */
-				ctemp = node_print_function(file, graph_getNode(g, conn[j]));
-				if (ctemp <= 0){
-					return c;
-				}
-				c += ctemp;
-			}
-		}
-		free(conn);
-
-		c += fprintf(file, "\n\n");
-	}
-	free(ids);
-
-	return c;
-}
 
 int prueba(const Graph * g, Stack *p){
     int i, j, nNodes, numConexTo, numConexFrom;
@@ -157,7 +87,7 @@ int prueba(const Graph * g, Stack *p){
         conex = graph_getConnectionsTo(g, ids[i]);
         for(j = 0; j< numConexTo; j++){
             e = element_ini();
-            element_setInfo(e, graph_getNode(g, conex[i]));
+            element_setInfo(e, graph_getNode(g, conex[j]));
             stack_push(p, e);
             element_destroy(e); /*Como push hace una copia, liberamos*/
         }
@@ -192,9 +122,10 @@ int main(int argc, char** argv) {
             return -1;
         }
 	
-	graph_print(stdout, g);
-	format_graph(stdout, g, &node_print);
-
+	
+	prueba(g,s);
+        stack_print(stdout,s);
+        
 	graph_destroy(g);
         stack_destroy(s);
 
