@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/node.o \
 	${OBJECTDIR}/p2e1.o \
 	${OBJECTDIR}/p2e2.o \
+	${OBJECTDIR}/p2e3.o \
 	${OBJECTDIR}/stack.o
 
 
@@ -91,6 +92,11 @@ ${OBJECTDIR}/p2e2.o: p2e2.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e2.o p2e2.c
+
+${OBJECTDIR}/p2e3.o: p2e3.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e3.o p2e3.c
 
 ${OBJECTDIR}/stack.o: stack.c
 	${MKDIR} -p ${OBJECTDIR}

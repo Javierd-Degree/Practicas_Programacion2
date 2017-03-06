@@ -31,8 +31,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" 3</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" grafo.txt</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" grafo1.txt</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" grafo2_desorden.txt</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" grafo2_orden.txt</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" grafo1.txt</runcommand>
+        <runcommand>"${OUTPUT_PATH}" grafo2_orden.txt</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <console-type>2</console-type>
