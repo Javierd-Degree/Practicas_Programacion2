@@ -82,36 +82,33 @@ Status prueba(Graph *g, Node *n){
     tempEle = element_ini();
     if(tempEle == NULL) return ERROR;
     element_setInfo(tempEle, n);
+
     stack_push(s, tempEle);
     element_destroy(tempEle);
  
     /*Mientras que la pila no esté vació, cogemos el elemento superior y metemos sus conexiones, si no tiene conexiones lo sacamos*/
     while(!stack_isEmpty(s)){
         tempEle = stack_top(s);
-        numConex = graph_getNumberOfConnectionsTo(g, node_getId(element_getInfo(tempEle)));
-        /*TODO COMPROBAR SI ESTÁ CONECTADO AL ANTERIOR EN LA PILA O NO*/
-        if(numConex == 0 || numConex == -1){
-            element_destroy(tempEle);
-            tempEle = stack_pop(s);
-            node_setVisited(element_getInfo(tempEle), BLACK);
-            printf("Nodo %d visitado y descubierto\n", node_getId(element_getInfo(tempEle)));
-        }else{
-            listConex = graph_getConnectionsTo(g, node_getId(tempN));
+        numConex = graph_getNumberOfConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
+        
+        listConex = graph_getConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
             for(i = 0; i<numConex; i++){
-                /*TODO COMPROBAR SI YA ESTÁ METIDO EN LA PILA O NO*/
-                /*Comprobar si está o no metido ya*/
                 tempN = graph_getNode(g, listConex[i]);
                 if(node_getVisited(tempN) == WHITE){
-                    element_ini(tempEle);
+                    tempEle = element_ini();
                     node_setVisited(tempN, GREY);
                     element_setInfo(tempEle, tempN);
                     stack_push(s, tempEle);
-                    free(listConex);
                     element_destroy(tempEle);
                 }
             }
-        }
+        free(listConex);
+        tempEle = stack_pop(s);
+        node_setVisited(element_getInfo(tempEle), BLACK);
+        printf("Nodo %d visitado y descubierto\n", node_getId(element_getInfo(tempEle)));
+        element_destroy(tempEle);
     }
+    stack_destroy(s);
 }
 
 int main(int argc, char** argv) {
@@ -131,14 +128,12 @@ int main(int argc, char** argv) {
         return -1;
     }
     
-    n = node_ini();
+    n = graph_getNode(g, 1);
     if (n == NULL) {
         graph_destroy(g);
         stack_destroy(s);
         return -1;
     }
-    node_setId(n, 1);
-    node_setName(n, "a");
     
     prueba(g, n);
     
