@@ -66,27 +66,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/p2_e3.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/p2_e3 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/element.o: element.c 
+${OBJECTDIR}/element.o: element.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/element.o element.c
 
-${OBJECTDIR}/graph.o: graph.c 
+${OBJECTDIR}/graph.o: graph.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/graph.o graph.c
 
-${OBJECTDIR}/node.o: node.c 
+${OBJECTDIR}/node.o: node.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/node.o node.c
 
-${OBJECTDIR}/p2e3.o: p2e3.c 
+${OBJECTDIR}/p2e3.o: p2e3.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e3.o p2e3.c
 
-${OBJECTDIR}/stack.o: stack.c 
+${OBJECTDIR}/stack.o: stack.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/stack.o stack.c
@@ -97,7 +97,6 @@ ${OBJECTDIR}/stack.o: stack.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/p2_e3.exe
 
 # Subprojects
 .clean-subprojects:
