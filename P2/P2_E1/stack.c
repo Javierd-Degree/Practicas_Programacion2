@@ -47,7 +47,8 @@ Element * stack_top(const Stack *s){
     if(s==NULL) return NULL;
     /*No hay ningún elemento*/
     if(stack_isEmpty(s)) return NULL;
-    return s->item[s->top -1];
+    Element *ec = element_copy(s->item[s->top -1]); 
+    return ec;
 }
 
 Bool stack_isEmpty(const Stack *s){
