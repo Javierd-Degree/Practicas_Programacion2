@@ -74,6 +74,8 @@ int format_graph(const Graph * g, Stack *p) {
     int i, j, nNodes, numConexTo, numConexFrom;
     int *ids, *conex;
 
+    if(g == NULL || p == NULL) return -1;
+    
     ids = graph_getNodeIds(g);
     nNodes = graph_getNnodes(g);
 
