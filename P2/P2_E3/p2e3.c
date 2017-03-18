@@ -120,13 +120,13 @@ Bool ejercicio2(Graph *g, Node *n, Node *nDestino){
     Element *tempEle, *procEle;
     int *listConex, numConex, aDesc[MAX_NODES], numDesc = 0, i;
     
-    if(g == NULL || n==NULL) return ERROR;
+    if(g == NULL || n==NULL) return FALSE;
     s = stack_ini();
-    if (s == NULL) return ERROR;
+    if (s == NULL) return FALSE;
     
     /*Insertamos el elemento inicial*/
     procEle = element_ini();
-    if(procEle == NULL) return ERROR;
+    if(procEle == NULL) return FALSE;
     element_setInfo(procEle, n);
 
     stack_push(s, procEle);
@@ -158,7 +158,7 @@ Bool ejercicio2(Graph *g, Node *n, Node *nDestino){
         element_destroy(procEle);
     }
     stack_destroy(s);
-    return OK;
+    return FALSE;
 }
 
 int main(int argc, char** argv) {
