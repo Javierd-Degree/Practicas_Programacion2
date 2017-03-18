@@ -72,29 +72,29 @@ Graph * read_graph_from_file(char * filename){
 Status ejercicio1(Graph *g, Node *n){
     Stack *s;
     Node *tempN;
-    Element *tempEle;
+    Element *tempEle, *procEle;
     int *listConex, numConex, aDesc[MAX_NODES], numDesc = 0, i;
+    
     if(g == NULL || n==NULL) return ERROR;
     s = stack_ini();
     if (s == NULL) return ERROR;
     
     /*Insertamos el elemento inicial*/
-    tempEle = element_ini();
-    if(tempEle == NULL) return ERROR;
-    element_setInfo(tempEle, n);
+    procEle = element_ini();
+    if(procEle == NULL) return ERROR;
+    element_setInfo(procEle, n);
 
-    stack_push(s, tempEle);
-    element_destroy(tempEle);
+    stack_push(s, procEle);
+    element_destroy(procEle);
  
-    /*Mientras que la pila no esté vació, cogemos el elemento superior y metemos sus conexiones, si no tiene conexiones lo sacamos*/
     while(!stack_isEmpty(s)){
-        tempEle = stack_top(s);
-        numConex = graph_getNumberOfConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
+        procEle = stack_pop(s);
+        numConex = graph_getNumberOfConnectionsFrom(g, node_getId(element_getInfo(procEle)));
+        listConex = graph_getConnectionsFrom(g, node_getId(element_getInfo(procEle)));
         
-        listConex = graph_getConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
             for(i = 0; i<numConex; i++){
                 tempN = graph_getNode(g, listConex[i]);
-                if(node_getVisited(tempN) == WHITE){
+                if(node_getVisited(tempN) != BLACK){
                     tempEle = element_ini();
                     node_setVisited(tempN, GREY);
                     element_setInfo(tempEle, tempN);
@@ -102,11 +102,13 @@ Status ejercicio1(Graph *g, Node *n){
                     element_destroy(tempEle);
                 }
             }
+        
         free(listConex);
-        tempEle = stack_pop(s);
-        node_setVisited(element_getInfo(tempEle), BLACK);
-        printf("Nodo %d visitado y descubierto\n", node_getId(element_getInfo(tempEle)));
-        element_destroy(tempEle);
+        /*Cogemos el nodo del grafo, no la copia que obtenemos al hacer stack pop*/
+        tempN = graph_getNode(g, node_getId(element_getInfo(procEle))); 
+        node_setVisited(tempN, BLACK);
+        printf("Nodo %d visitado y descubierto\n", node_getId(tempN));
+        element_destroy(procEle);
     }
     stack_destroy(s);
     return OK;
@@ -115,32 +117,32 @@ Status ejercicio1(Graph *g, Node *n){
 Bool ejercicio2(Graph *g, Node *n, Node *nDestino){
     Stack *s;
     Node *tempN;
-    Element *tempEle;
+    Element *tempEle, *procEle;
     int *listConex, numConex, aDesc[MAX_NODES], numDesc = 0, i;
-    if(g == NULL || n==NULL || nDestino==NULL) return ERROR;
+    
+    if(g == NULL || n==NULL) return ERROR;
     s = stack_ini();
     if (s == NULL) return ERROR;
     
     /*Insertamos el elemento inicial*/
-    tempEle = element_ini();
-    if(tempEle == NULL) return ERROR;
-    element_setInfo(tempEle, n);
+    procEle = element_ini();
+    if(procEle == NULL) return ERROR;
+    element_setInfo(procEle, n);
 
-    stack_push(s, tempEle);
-    element_destroy(tempEle);
+    stack_push(s, procEle);
+    element_destroy(procEle);
  
-    /*Mientras que la pila no esté vació, cogemos el elemento superior y metemos sus conexiones, si no tiene conexiones lo sacamos*/
     while(!stack_isEmpty(s)){
-        tempEle = stack_top(s);
-        numConex = graph_getNumberOfConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
+        procEle = stack_pop(s);
+        numConex = graph_getNumberOfConnectionsFrom(g, node_getId(element_getInfo(procEle)));
+        listConex = graph_getConnectionsFrom(g, node_getId(element_getInfo(procEle)));
         
-        listConex = graph_getConnectionsFrom(g, node_getId(element_getInfo(tempEle)));
             for(i = 0; i<numConex; i++){
                 tempN = graph_getNode(g, listConex[i]);
                 if(node_equals(tempN, nDestino)){
                         return TRUE; /*Hay alguna forma de llegar*/
-                    }
-                if(node_getVisited(tempN) == WHITE){
+                }
+                if(node_getVisited(tempN) != BLACK){
                     tempEle = element_ini();
                     node_setVisited(tempN, GREY);
                     element_setInfo(tempEle, tempN);
@@ -148,13 +150,15 @@ Bool ejercicio2(Graph *g, Node *n, Node *nDestino){
                     element_destroy(tempEle);
                 }
             }
+        
         free(listConex);
-        tempEle = stack_pop(s);
-        node_setVisited(element_getInfo(tempEle), BLACK);
-        element_destroy(tempEle);
+        /*Cogemos el nodo del grafo, no la copia que obtenemos al hacer stack pop*/
+        tempN = graph_getNode(g, node_getId(element_getInfo(procEle))); 
+        node_setVisited(tempN, BLACK);
+        element_destroy(procEle);
     }
     stack_destroy(s);
-    return FALSE;
+    return OK;
 }
 
 int main(int argc, char** argv) {
@@ -174,17 +178,18 @@ int main(int argc, char** argv) {
         return -1;
     }
     
-    n = graph_getNode(g, 3);
+    n = graph_getNode(g, 1);
     if (n == NULL) {
         graph_destroy(g);
         stack_destroy(s);
         return -1;
     }
     
-    nDestino = graph_getNode(g, 2);
+    nDestino = graph_getNode(g, 4);
     if (nDestino == NULL) {
         graph_destroy(g);
         stack_destroy(s);
+        printf("Nodo destino no disponible");
         return -1;
     }
     
