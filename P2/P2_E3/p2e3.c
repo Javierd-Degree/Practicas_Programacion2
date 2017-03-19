@@ -201,6 +201,9 @@ int main(int argc, char** argv) {
     }else{
         printf("Nodo con id %d no accesible", node_getId(nDestino));
     }
+
+    stack_destroy(s);
+    graph_destroy(g);
     
     return (EXIT_SUCCESS);
 }

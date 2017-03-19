@@ -102,6 +102,8 @@ int format_graph(const Graph * g, Stack *sNode, Stack *sInt) {
         }
         free(conex);
     }
+    free(ids);
+    return 1;
 }
 
 int main(int argc, char** argv) {

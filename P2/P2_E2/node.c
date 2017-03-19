@@ -43,19 +43,24 @@ Node *node_setName(Node *n, const char *name){
 }
 
 Bool node_equals(const Node *n1, const Node *n2){
+    if(n1 == NULL || n2 == NULL) return FALSE;
     if(n1->id == n2->id && (strcmp(n1->name, n2->name) == 0)){
         return TRUE;
     }
     return FALSE;
 }
+
 Node *node_copy(const Node *src){
+    if(src == NULL) return NULL;
     Node *n2;
-    n2 = (Node*)malloc(sizeof(Node));
+    n2 = node_ini();
     if (n2 == NULL) return NULL;
     n2->id = src->id;
     strcpy(n2->name, src->name);
     return n2;
 }
+
 int node_print(FILE *pf, const Node *n){
-    return fprintf(pf, "[%d, %s]\n", node_getId(n), node_getName(n));
+    if(pf == NULL || n == NULL) return -1;
+    return fprintf(pf, "[%d, %s]", node_getId(n), node_getName(n));
 }
