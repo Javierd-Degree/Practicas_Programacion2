@@ -1,0 +1,7 @@
+Pareja 8 
+	Javier Delgado del Cerro 
+	Victoria Pelayo Alvaredo 
+	Ignacio Rabuñal García 
+ 
+En la carpeta makefiles netbeans se incluyen los archivos makefile de los distintos ejercicios generados automáticamente por netbeans, 
+pues los de las carpetas de los ejercicios loe generamos nosotros para compilar los programas en linux y poder usar valgrind

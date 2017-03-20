@@ -38,9 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/element.o \
 	${OBJECTDIR}/graph.o \
 	${OBJECTDIR}/node.o \
-	${OBJECTDIR}/p2e1.o \
-	${OBJECTDIR}/p2e2.o \
-	${OBJECTDIR}/p2e3.o \
+	${OBJECTDIR}/p2_e2.o \
 	${OBJECTDIR}/stack.o
 
 
@@ -83,20 +81,10 @@ ${OBJECTDIR}/node.o: node.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/node.o node.c
 
-${OBJECTDIR}/p2e1.o: p2e1.c
+${OBJECTDIR}/p2_e2.o: p2_e2.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e1.o p2e1.c
-
-${OBJECTDIR}/p2e2.o: p2e2.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e2.o p2e2.c
-
-${OBJECTDIR}/p2e3.o: p2e3.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e3.o p2e3.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2_e2.o p2_e2.c
 
 ${OBJECTDIR}/stack.o: stack.c
 	${MKDIR} -p ${OBJECTDIR}

@@ -38,7 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/functions.o \
 	${OBJECTDIR}/graph.o \
 	${OBJECTDIR}/node.o \
-	${OBJECTDIR}/p2e4.o \
+	${OBJECTDIR}/p2_e4.o \
 	${OBJECTDIR}/stack_fp.o
 
 
@@ -81,10 +81,10 @@ ${OBJECTDIR}/node.o: node.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/node.o node.c
 
-${OBJECTDIR}/p2e4.o: p2e4.c
+${OBJECTDIR}/p2_e4.o: p2_e4.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2e4.o p2e4.c
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2_e4.o p2_e4.c
 
 ${OBJECTDIR}/stack_fp.o: stack_fp.c
 	${MKDIR} -p ${OBJECTDIR}

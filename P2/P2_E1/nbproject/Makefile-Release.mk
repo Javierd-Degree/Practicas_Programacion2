@@ -36,7 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/element.o \
-	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/p2_e1.o \
 	${OBJECTDIR}/stack.o
 
 
@@ -69,10 +69,10 @@ ${OBJECTDIR}/element.o: element.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/element.o element.c
 
-${OBJECTDIR}/main.o: main.c
+${OBJECTDIR}/p2_e1.o: p2_e1.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p2_e1.o p2_e1.c
 
 ${OBJECTDIR}/stack.o: stack.c
 	${MKDIR} -p ${OBJECTDIR}

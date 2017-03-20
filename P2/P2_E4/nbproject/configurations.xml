@@ -20,7 +20,7 @@
       <itemPath>functions.c</itemPath>
       <itemPath>graph.c</itemPath>
       <itemPath>node.c</itemPath>
-      <itemPath>p2e4.c</itemPath>
+      <itemPath>p2_e4.c</itemPath>
       <itemPath>stack_fp.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -60,7 +60,7 @@
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="p2e4.c" ex="false" tool="0" flavor2="0">
+      <item path="p2_e4.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="stack_fp.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -101,7 +101,7 @@
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="p2e4.c" ex="false" tool="0" flavor2="0">
+      <item path="p2_e4.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="stack_fp.c" ex="false" tool="0" flavor2="0">
       </item>
