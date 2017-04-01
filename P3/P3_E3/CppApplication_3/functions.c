@@ -1,5 +1,4 @@
 #include "functions.h"
-
 #include "node.h"
 
 /*
@@ -42,6 +41,22 @@ int print_node_function(FILE * f, const void* e) {
     return node_print(f, (Node *) e);
 }
 
-int compare_node_function(const void* e1, const void* e2) {
+int compare_nodelist_function(const void* e1, const void* e2) {
     return node_compare((Node *) e1, (Node *) e2);
 }
+/*Creo q las funciones para nodelist serian asi :
+
+void destroy_nodelist_function(NodeList *n){
+    if(n==NULL) return;
+    n->data = NULL;
+    n->next = NULL;
+    free (n);
+    return;
+}
+void *copy_nodelist_function(const NodeList *){
+    
+}
+int printf_nodelist_function(const NodeList *e1, const NodeList *e2);
+int compare_nodelist_function(const NodeList *e1, const NodeList *e2);
+
+ */

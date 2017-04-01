@@ -1,6 +1,7 @@
 #include "list.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "types.h"
 
 #define NEXT(N) (N)->next
 #define FIRST(N) (N)->node
@@ -119,7 +120,7 @@ List* list_insertInOrder(List *list, const void *pElem){
 
 void * list_extractFirst(List* list){
     NodeList *nAux;
-    if(list == NULL || list_isEmpty(list)) return;
+    if(list == NULL || list_isEmpty(list)) return NULL;
     nAux = FIRST(list);
     FIRST(list) = NEXT(nAux);
     return nAux;
@@ -129,8 +130,8 @@ void * list_extractLast(List* list){
     NodeList *nAux;
     if(list == NULL || list_isEmpty(list)) return;
     for(nAux = FIRST(list); NEXT(NEXT(nAux)) != NULL; nAux = NEXT(nAux));
-    list->destroy_element_function(NEXT(nAux));
     NEXT(nAux) = NULL;
+    return NEXT(nAux);
 }
 
 Bool list_isEmpty(const List* l){
@@ -139,3 +140,35 @@ Bool list_isEmpty(const List* l){
     return FALSE;
 }
 
+const void* list_get(const List* list, int i){
+    int j;
+    NodeList *nAux;
+    if(list == NULL)return NULL;
+    if (i==1) return FIRST(list);
+    for(j=0, nAux = FIRST(list);j<i && nAux==NULL;j++, nAux=NEXT(nAux)); /*la primera posición es la 0*/
+    if(j = i) return nAux;
+    return NULL;
+}
+
+int list_size(const List* list){
+    int i;
+    NodeList *nAux;
+    if(list == NULL) return NULL;
+    if(list_isEmpty(list) == TRUE) return 0;
+    for(i=0,nAux = FIRST(list);nAux!=NULL;i++, nAux= NEXT(nAux));
+    /*como empezamos desde la posición 0 la posición del último que no es NULL es el numero de elementos menos uno*/
+    return i;
+}
+
+int list_print(FILE *fd, const List* list){
+    int size,i,nchar,n;
+    NodeList * nAux;
+    if(list == NULL || fd == NULL) return NULL;
+    size=list_size(list);
+    if(size == 0)return 0;
+    for(i=0, nAux = FIRST(list);i<size;i++, nAux = NEXT(nAux)){
+        if((n = list->print_element_function(fd, nAux) == -1) return -1;
+        nchar = nchar +n;
+    }
+    return nchar;
+}
