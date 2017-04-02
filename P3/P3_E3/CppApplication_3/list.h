@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "types.h"
 #ifndef LIST_H
 #define LIST_H
 

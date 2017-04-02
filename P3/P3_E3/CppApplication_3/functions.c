@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "functions.h"
 #include "node.h"
 
@@ -28,6 +29,20 @@ int print_intp_function(FILE * f, const void* e) {
     return -1;
 }
 
+int compare_intp_function(const void* e1, const void* e2) {
+    if(e1 == NULL || e2 == NULL) return -2;
+    int e1i, e2i;
+    e1i = *((int*) e1);
+    e2i = *((int*) e2);
+    if(e1i = e2i){
+        return 0;
+    }else if(e1i < e2i){
+        return -1;
+    }else{
+        return 1;
+    }
+}
+
 /* Las siguientes se usarán cuando se quieran guardar nodos en la pila */
 void destroy_node_function(void* e) {
     node_destroy((Node *) e);
@@ -41,22 +56,7 @@ int print_node_function(FILE * f, const void* e) {
     return node_print(f, (Node *) e);
 }
 
-int compare_nodelist_function(const void* e1, const void* e2) {
+int compare_node_function(const void* e1, const void* e2) {
     return node_compare((Node *) e1, (Node *) e2);
 }
-/*Creo q las funciones para nodelist serian asi :
 
-void destroy_nodelist_function(NodeList *n){
-    if(n==NULL) return;
-    n->data = NULL;
-    n->next = NULL;
-    free (n);
-    return;
-}
-void *copy_nodelist_function(const NodeList *){
-    
-}
-int printf_nodelist_function(const NodeList *e1, const NodeList *e2);
-int compare_nodelist_function(const NodeList *e1, const NodeList *e2);
-
- */

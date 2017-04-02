@@ -18,8 +18,8 @@
                    projectFiles="true">
       <itemPath>functions.c</itemPath>
       <itemPath>list.c</itemPath>
-      <itemPath>main.c</itemPath>
       <itemPath>node.c</itemPath>
+      <itemPath>p3_e3.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -51,11 +51,11 @@
       </item>
       <item path="list.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="node.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p3_e3.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="types.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -88,11 +88,11 @@
       </item>
       <item path="list.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="node.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p3_e3.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="types.h" ex="false" tool="3" flavor2="0">
       </item>
