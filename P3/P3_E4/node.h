@@ -1,3 +1,4 @@
+
 #ifndef NODE_H
 #define NODE_H
 
@@ -26,3 +27,4 @@ Node * node_copy(const Node * src);
 int node_print(FILE *pf, const Node * n); 
 
 #endif /* NODE_H */
+

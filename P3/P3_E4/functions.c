@@ -59,4 +59,3 @@ int print_node_function(FILE * f, const void* e) {
 int compare_node_function(const void* e1, const void* e2) {
     return node_compare((Node *) e1, (Node *) e2);
 }
-
