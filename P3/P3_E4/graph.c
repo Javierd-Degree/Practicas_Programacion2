@@ -40,11 +40,10 @@ void graph_destroy(Graph *g){
         if(g->nodes[i] != NULL){
             node_destroy(g->nodes[i]);
         }
+        list_free(g->out_connections[i]);
+        list_free(g->in_connections[i]);
     }
-    
-    list_free(g->out_connections);
-    list_free(g->in_connections);
-    
+   
     free(g);
 }
 
@@ -114,8 +113,8 @@ Graph *graph_addEdge(Graph *g, const int nId1, const int nId2){
     
     if(pos1 == -1 || pos2 == -1) return NULL;
     
-    list_insertLast(g->out_connections[pos1], nId2);
-    list_insertLast(g->in_connections[pos2], nId1);
+    list_insertLast(g->out_connections[pos1], &nId2);
+    list_insertLast(g->in_connections[pos2], &nId1);
      
     return g;
 }
@@ -134,7 +133,7 @@ Node *graph_getNode(const Graph *g, int nId){
 
 Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     if (g == NULL) return FALSE;
-    int pos1, pos2,i,idTemp;
+    int pos1, pos2, i, *idTemp;
     
     pos1 = find_node_index(g, nId1);
     pos2 = find_node_index(g, nId2);
@@ -142,8 +141,12 @@ Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     if(pos1 == -1 || pos2 == -1) return FALSE; /*Por si alguno no existe*/
     /*Buscamos en la lista de conexiones salientes del primer nodo si esta el id del segundo*/
     for(i=0;i<list_size(g->out_connections[pos1]);i++){
-        idTemp = list_get(g->out_connections[pos1],i);
-        if(idTemp == nId2) return TRUE;
+        idTemp = (int *) list_get(g->out_connections[pos1],i);
+        if(*idTemp == nId2){
+            destroy_intp_function(idTemp);
+            return TRUE;
+        } 
+        destroy_intp_function(idTemp);
     }
     return FALSE;
 }
@@ -160,7 +163,7 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
 }
 
 int* graph_getConnectionsFrom(const Graph * g, const int fromId){
-    int i, numConex, *listConex,pos;
+    int i, numConex, *listConex, pos, *temp;
     if(g == NULL) return NULL;
     numConex = graph_getNumberOfConnectionsFrom(g, fromId);
     if(numConex == 0 || numConex == -1) return NULL;
@@ -169,10 +172,12 @@ int* graph_getConnectionsFrom(const Graph * g, const int fromId){
     if(listConex == NULL) return NULL;
     
     pos = find_node_index(g,fromId); /*Obtenemos la posición*/
-    if(pos == -1) return -1;
+    if(pos == -1) return NULL;
     
     for(i=0;i++;i<numConex){
-        listConex[i] = list_get(g->out_connections[pos],i); /*Voy cogiendo los id de la lista de las conexiones salientes de ese nodo y los meto en el array de enteros(esos id)*/   
+        temp = (int*) list_get(g->out_connections[pos],i); /*Voy cogiendo los id de la lista de las conexiones salientes de ese nodo y los meto en el array de enteros(esos id)*/   
+        listConex[i] = *temp;
+        destroy_intp_function(temp);
     }
     return listConex;
 }
@@ -189,7 +194,7 @@ int graph_getNumberOfConnectionsTo(const Graph * g, const int toId){
 }
 
 int* graph_getConnectionsTo(const Graph * g, const int toId){
-    int i, numConex, *listConex,pos;
+    int i, numConex, *listConex, pos, *temp;
     if(g == NULL) return NULL;
     numConex = graph_getNumberOfConnectionsTo(g, toId);
     if(numConex == 0 || numConex == -1) return NULL;
@@ -198,10 +203,12 @@ int* graph_getConnectionsTo(const Graph * g, const int toId){
     if(listConex == NULL) return NULL;
     
     pos = find_node_index(g,toId); /*Obtenemos la posición*/
-    if(pos == -1) return -1;
+    if(pos == -1) return NULL;
     
     for(i=0;i++;i<numConex){
-        listConex[i] = list_get(g->in_connections[pos],i); /*Voy cogiendo los id de la lista de las conexiones entrantes de ese nodo y los meto en el array de enteros(esos id)*/   
+        temp = (int *) list_get(g->in_connections[pos], i); /*Voy cogiendo los id de la lista de las conexiones entrantes de ese nodo y los meto en el array de enteros(esos id)*/   
+        listConex[i] = *temp;
+        destroy_intp_function(temp);
     }
     return listConex;
 }
@@ -218,7 +225,7 @@ int graph_print(FILE *pf, const Graph *g){
             for(j = 0; j<graph_getNnodes(g) ; j++){
                 id2 = node_getId(g->nodes[j]);
                 /*Imprimo 0 cuando no están conectados y 1 cuando si lo están*/
-                numChar += fprintf(pf," %d " ,graph_areConnected(id1,id2));
+                numChar += fprintf(pf," %d " ,graph_areConnected(g, id1,id2));
             }
             numChar+=fprintf(pf,"\n");
         }

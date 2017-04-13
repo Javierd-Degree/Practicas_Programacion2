@@ -38,7 +38,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/functions.o \
 	${OBJECTDIR}/graph.o \
 	${OBJECTDIR}/list.o \
-	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/node.o \
 	${OBJECTDIR}/p3_e4.o
 
@@ -81,11 +80,6 @@ ${OBJECTDIR}/list.o: list.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/list.o list.c
-
-${OBJECTDIR}/main.o: main.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/node.o: node.c
 	${MKDIR} -p ${OBJECTDIR}
