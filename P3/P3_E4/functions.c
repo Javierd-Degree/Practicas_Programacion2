@@ -30,11 +30,12 @@ int print_intp_function(FILE * f, const void* e) {
 }
 
 int compare_intp_function(const void* e1, const void* e2) {
-    if(e1 == NULL || e2 == NULL) return -2;
     int e1i, e2i;
+    if(e1 == NULL || e2 == NULL) return -2;
+    
     e1i = *((int*) e1);
     e2i = *((int*) e2);
-    if(e1i = e2i){
+    if(e1i == e2i){
         return 0;
     }else if(e1i < e2i){
         return -1;

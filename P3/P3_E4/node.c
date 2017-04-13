@@ -72,8 +72,9 @@ int node_compare(Node *n1, Node *n2){
 }
 
 Node *node_copy(const Node *src){
-    if(src == NULL) return NULL;
     Node *n2;
+    if(src == NULL) return NULL;
+
     n2 = node_ini();
     if (n2 == NULL) return NULL;
     n2->id = src->id;
