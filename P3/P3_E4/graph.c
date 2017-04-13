@@ -20,10 +20,10 @@ Graph *graph_ini(){
         g->out_connections[i] = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
 
         if(g->out_connections[i] == NULL){
-        	for(i=i; i>=0; i--){
-        		list_free(g->out_connections[i]);
-    		}
-        	return NULL;
+            for(i=i; i>=0; i--){
+                list_free(g->out_connections[i]);
+            }
+            return NULL;
         }
     }
     
@@ -31,22 +31,22 @@ Graph *graph_ini(){
         g->in_connections[i] = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
 
         if(g->in_connections[i] == NULL){
-        	for(i=i; i>=0; i--){
-        		list_free(g->in_connections[i]);
-    		}
-    		for(i=0; i<MAX_NODES; i++){
-        		list_free(g->out_connections[i]);
-    		}
-        	return NULL;
+            for(i=i; i>=0; i--){
+                list_free(g->in_connections[i]);
+            }
+            for(i=0; i<MAX_NODES; i++){
+                list_free(g->out_connections[i]);
+            }
+            return NULL;
         }
     }
 
     if(g->out_connections == NULL || g->in_connections == NULL) {
-    	for(i=0; i<MAX_NODES; i++){
-        	list_free(g->out_connections[i]);
-        	list_free(g->in_connections[i]);
-    	}
-    	return NULL;
+        for(i=0; i<MAX_NODES; i++){
+            list_free(g->out_connections[i]);
+            list_free(g->in_connections[i]);
+        }
+        return NULL;
     }
 
     for(i=0; i<MAX_NODES; i++){
@@ -108,7 +108,7 @@ int graph_getNedges(const Graph *g){
 }
 
 Graph *graph_addNode(Graph *g, const Node *n){
-	Node *nCopy;
+    Node *nCopy;
     if (g == NULL || n == NULL) return NULL;
     if(graph_getNnodes(g)>= MAX_NODES) return NULL;
     
@@ -157,7 +157,7 @@ Node *graph_getNode(const Graph *g, int nId){
 }
 
 Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
-	int pos1, pos2, i, *idTemp;
+    int pos1, pos2, i, *idTemp;
     if (g == NULL) return FALSE;
     
     pos1 = find_node_index(g, nId1);
@@ -197,8 +197,8 @@ int* graph_getConnectionsFrom(const Graph * g, const int fromId){
     
     pos = find_node_index(g,fromId); /*Obtenemos la posición*/
     if(pos == -1) {
-    	free(listConex);
-    	return NULL;
+        free(listConex);
+        return NULL;
     }
     
     for(i = 0; i < numConex; i++){
