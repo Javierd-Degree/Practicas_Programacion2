@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include "list.h"
 #include <stdlib.h>
 #include "functions.h"
 #include "graph.h"
+#include "types.h"
 
 typedef struct _Graph{
     Node* nodes[MAX_NODES];
@@ -14,8 +16,14 @@ Graph *graph_ini(){
     Graph *g;
     g = (Graph *)malloc(sizeof(Graph));
     if(g == NULL) return NULL;
-    g->out_connections = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
-    g->in_connections = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
+    for(i=0;i<MAX_NODES;i++){
+        g->out_connections[i] = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
+    }
+    
+    for(i=0;i<MAX_NODES;i++){
+        g->in_connections[i] = list_ini(destroy_intp_function, copy_intp_function, print_intp_function, compare_intp_function);
+    }
+
     if(g->out_connections == NULL || g->in_connections == NULL) return NULL;
     for(i=0; i<MAX_NODES; i++){
         g->nodes[i] = NULL;
@@ -68,7 +76,7 @@ int graph_getNedges(const Graph *g){
     
     for(i=0; i<graph_getNnodes(g); i++){
        if(g->out_connections[i] != NULL){
-           numEdges += list_size(g->out_connections[i]);
+           numEdges += list_size(g->out_connections[i]); /*No hay mas de un enlace entre dos nodos, luego con mirar las conexiones salientes de cada nodo bastaría*/
        }
     }
  
@@ -126,14 +134,17 @@ Node *graph_getNode(const Graph *g, int nId){
 
 Bool graph_areConnected(const Graph *g, const int nId1, const int nId2){
     if (g == NULL) return FALSE;
-    int pos1, pos2;
+    int pos1, pos2,i,idTemp;
     
     pos1 = find_node_index(g, nId1);
     pos2 = find_node_index(g, nId2);
     
     if(pos1 == -1 || pos2 == -1) return FALSE; /*Por si alguno no existe*/
-   
-    if(g->out_connections[]) return TRUE;
+    /*Buscamos en la lista de conexiones salientes del primer nodo si esta el id del segundo*/
+    for(i=0;i<list_size(g->out_connections[pos1]);i++){
+        idTemp = list_get(g->out_connections[pos1],i);
+        if(idTemp == nId2) return TRUE;
+    }
     return FALSE;
 }
 
@@ -141,6 +152,7 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
     int i, pos, numConex = 0;
     if(g == NULL) return -1;
     pos = find_node_index(g, fromId);
+    if(pos == -1) return -1;
   
     numConex = list_size(g->out_connections[pos]);
 
@@ -148,68 +160,65 @@ int graph_getNumberOfConnectionsFrom(const Graph * g, const int fromId){
 }
 
 int* graph_getConnectionsFrom(const Graph * g, const int fromId){
-    int i, numConex, addedNodes, toId, *listConex;
+    int i, numConex, *listConex,pos;
     if(g == NULL) return NULL;
-    
     numConex = graph_getNumberOfConnectionsFrom(g, fromId);
     if(numConex == 0 || numConex == -1) return NULL;
     
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
     
-    /*Revisamos las conexiones mirando toda la fila del nodo*/
-    for(i=0, addedNodes=0; i<g->nNodes; i++){
-        toId = node_getId(g->dat[i]);
-        if(toId == -1) continue; /*El nodo no es válido, lo saltamos*/
-        if(graph_areConnected(g, fromId, toId)){
-            listConex[addedNodes] = toId;
-            addedNodes++;
-        }
+    pos = find_node_index(g,fromId); /*Obtenemos la posición*/
+    if(pos == -1) return -1;
+    
+    for(i=0;i++;i<numConex){
+        listConex[i] = list_get(g->out_connections[pos],i); /*Voy cogiendo los id de la lista de las conexiones salientes de ese nodo y los meto en el array de enteros(esos id)*/   
     }
     return listConex;
 }
 
-int graph_getNumberOfConnectionsTo(const Graph * g, const int fromId){
+int graph_getNumberOfConnectionsTo(const Graph * g, const int toId){
     int i, pos, numConex = 0;
     if(g == NULL) return -1;
-    pos = find_node_index(g, fromId);
+    pos = find_node_index(g, toId);
+    if(pos == -1) return -1;
   
     numConex = list_size(g->in_connections[pos]);
 
     return numConex;
 }
 
-int* graph_getConnectionsTo(const Graph * g, const int fromId){
-    int i, toId, numConex, addedNodes, *listConex;
+int* graph_getConnectionsTo(const Graph * g, const int toId){
+    int i, numConex, *listConex,pos;
     if(g == NULL) return NULL;
-    
-    numConex = graph_getNumberOfConnectionsTo(g, fromId);
+    numConex = graph_getNumberOfConnectionsTo(g, toId);
     if(numConex == 0 || numConex == -1) return NULL;
     
     listConex = (int *)malloc(sizeof(int)*numConex);
     if(listConex == NULL) return NULL;
     
-    /*Revisamos las filas de la matriz en la columna del nodo*/
-    for(i=0, addedNodes=0; i<g->nNodes; i++){
-        toId = node_getId(g->dat[i]);
-        if(toId == -1) continue; /*El nodo no es válido, lo saltamos*/
-        if(graph_areConnected(g, toId, fromId) == TRUE){
-            listConex[addedNodes] = toId;
-            addedNodes++;
-        }
+    pos = find_node_index(g,toId); /*Obtenemos la posición*/
+    if(pos == -1) return -1;
+    
+    for(i=0;i++;i<numConex){
+        listConex[i] = list_get(g->in_connections[pos],i); /*Voy cogiendo los id de la lista de las conexiones entrantes de ese nodo y los meto en el array de enteros(esos id)*/   
     }
     return listConex;
 }
 
 int graph_print(FILE *pf, const Graph *g){
-        int i, j, numChar;
+        int i, j, numChar,id1,id2;
         numChar=0;
         numChar+=fprintf(pf,"N=%d, E=%d:\n", graph_getNnodes(g), graph_getNedges(g));
         
         for(i=0;i<graph_getNnodes(g);i++){
             numChar+=fprintf(pf,"[%d , %s]->", node_getId(g->nodes[i]), node_getName(g->nodes[i]));
-            for(j=0;j<graph_getNnodes(g);j++){
-                numChar+=fprintf(pf,"%d ", g->conexion[i][j]);
+            id1 = node_getId(g->nodes[i]);
+            /*Imprimimos la lista de los nodos a los que se conecta*/
+            for(j = 0; j<graph_getNnodes(g) ; j++){
+                id2 = node_getId(g->nodes[j]);
+                /*Imprimo 0 cuando no están conectados y 1 cuando si lo están*/
+                numChar += fprintf(pf," %d " ,graph_areConnected(id1,id2));
             }
             numChar+=fprintf(pf,"\n");
         }
