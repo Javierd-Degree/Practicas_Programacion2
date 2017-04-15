@@ -203,7 +203,7 @@ const void* list_get(const List* list, int i){
     int j;
     NodeList *nAux;
     if(list == NULL)return NULL;
-    if (i==1) return FIRST(list);
+    if (i==1) return FIRST(list)->data;
     for(j=0, nAux = FIRST(list);j<i && nAux==NULL;j++, nAux=NEXT(nAux)); /*la primera posición es la 0*/
     if(j = i) return nAux->data;
     return NULL;
