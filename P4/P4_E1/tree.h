@@ -40,7 +40,7 @@ Status tree_preOrderToList(List* l, const Tree* pa);
 /* Inserta en la lista l el recorrido de un árbol en orden medio */
 Status tree_inOrderToList(List* l, const Tree* pa);
 /* Inserta en la lista l el recorrido de un árbol en orden posterior */
-Status tree_postOrderToList(List* l, const Tree* pa)
+Status tree_postOrderToList(List* l, const Tree* pa);
         
 #endif /* TREE_H */
 

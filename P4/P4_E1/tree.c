@@ -2,22 +2,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define ROOT(T) (T)->root
-#define RIGHT(T) (T)->right
-#define LEFT(T) (T)->left
+#define RIGHT(N) (N)->right
+#define LEFT(N) (N)->left
 #define INFO(N) (N)->info
 
 typedef struct _NodeBT {
-void* info;
-struct _NodeBT* left;
-struct _NodeBT* right;
+	void* info;
+	struct _NodeBT* left;
+	struct _NodeBT* right;
 } NodeBT;
 
 struct _Tree {
-NodeBT *root;
-destroy_elementtree_function_type destroy_element_function;
-copy_elementtree_function_type copy_element_function;
-print_elementtree_function_type print_element_function;
-cmp_elementtree_function_type cmp_element_function;
+	NodeBT *root;
+	destroy_elementtree_function_type destroy_element_function;
+	copy_elementtree_function_type copy_element_function;
+	print_elementtree_function_type print_element_function;
+	cmp_elementtree_function_type cmp_element_function;
 };
 
 Tree * tree_ini( destroy_elementtree_function_type f1,
@@ -42,56 +42,50 @@ NodeBT *nodeBT_ini(Tree *pa, void *info){
     if (n == NULL) return NULL;
     n->info = pa->copy_element_function(info);
     if(n->info == NULL){
-        free(NodeBT);
+        free(n);
         return NULL;
     }
-    RIGHT(N) = NULL;
-    LEFT(N) = NULL;
-}
-
-void tree_destroy(Tree* pa){
-    if(pa == NULL) return NULL;
-    tree_destroy_rec(ROOT(pa));
-    free(pa);
+    RIGHT(n) = NULL;
+    LEFT(n) = NULL;
 }
 
 void tree_destroy_rec(NodeBT* n, Tree* pa){
-    if(n == NULL) return;
-    tree_destroy_rec(RIGHT(n));
-    tree_destroy_rec(LEFT(n));
+    if(n == NULL || pa == NULL) return;
+    tree_destroy_rec(RIGHT(n), pa);
+    tree_destroy_rec(LEFT(n), pa);
     pa->destroy_element_function(INFO(n));
     free(n);
 }
 
-Status tree_insert(Tree* pa, const void* po){
-    if(pa == NULL || po == NULL) return ERROR;
-    
-    return tree_insert_rec(pa, po, ROOT(pa));
+void tree_destroy(Tree* pa){
+    if(pa == NULL) return;
+    tree_destroy_rec(ROOT(pa), pa);
+    free(pa);
 }
 
-Status tree_insert_rec(Tree* pa, const void* po, NodeBT *n){
+Status tree_insert_rec(Tree* pa, const void* po, NodeBT **n){
     int cmp;
-    if(pa == NULL || po == NULL) return NULL;
+    if(pa == NULL || po == NULL) return ERROR;
     
-    if(n == NULL){
-        n = nodeBT_ini(pa, po);
+    if(*n == NULL){
+        *n = nodeBT_ini(pa, po);
         if(n == NULL) return ERROR;
         return OK;
     }
     
     cmp = pa->cmp_element_function(po, n);
-    if(cmp == -1) return tree_insert_rec(pa, po, LEFT(pa));
-    if(cmp == 1) return tree_insert_rec(pa, po, RIGHT(pa));
+    if(cmp == -1) return tree_insert_rec(pa, po, &LEFT(*n));
+    if(cmp == 1) return tree_insert_rec(pa, po, &RIGHT(*n));
     return OK;  /*Ya está insertado*/
 }
 
-Bool tree_find(Tree* pa, const void* po){
-    if(pa == NULL || po == NULL) return FALSE;
-    if(pa->cmp_element_function(po, ROOT(pa)) == 0) return TRUE;
-    return tree_find_rec(pa, po, ROOT(pa));
+Status tree_insert(Tree* pa, const void* po){
+    if(pa == NULL || po == NULL) return ERROR;
+    
+    return tree_insert_rec(pa, po, &ROOT(pa));
 }
 
-tree_find_rec(Tree* pa, const void* po, const NodeBT *n){
+Bool tree_find_rec(Tree* pa, const void* po, const NodeBT *n){
     if(pa == NULL || po == NULL || n == NULL) return FALSE;
     if(pa->cmp_element_function(po, INFO(n)) == 0) return TRUE;
     if(pa->cmp_element_function(po, INFO(n)) == 1)
@@ -100,15 +94,16 @@ tree_find_rec(Tree* pa, const void* po, const NodeBT *n){
         return tree_find_rec(pa, po, LEFT(n));
 }
 
+Bool tree_find(Tree* pa, const void* po){
+    if(pa == NULL || po == NULL) return FALSE;
+    if(pa->cmp_element_function(po, ROOT(pa)) == 0) return TRUE;
+    return tree_find_rec(pa, po, ROOT(pa));
+}
+
 Bool tree_isEmpty( const Tree* pa){
     if(pa == NULL) return TRUE;
     if(ROOT(pa) == NULL) return TRUE;
     return FALSE;
-}
-
-int tree_numNodes(const Tree* pa){
-    if(tree_isEmpty(pa)) return 0;
-    return tree_numNodes_rec(pa, ROOT(pa));
 }
 
 int tree_numNodes_rec(const Tree *pa, NodeBT *n){
@@ -121,9 +116,9 @@ int tree_numNodes_rec(const Tree *pa, NodeBT *n){
     return nRight + nLeft + 1;  /*Los nodos de su derecha, los de su izquierda y el mismo*/
 }
 
-int tree_depth(const Tree* pa){
+int tree_numNodes(const Tree* pa){
     if(tree_isEmpty(pa)) return 0;
-    return tree_depth_rec(pa, ROOT(pa));
+    return tree_numNodes_rec(pa, ROOT(pa));
 }
 
 int tree_depth_rec(const Tree *pa, NodeBT *n){
@@ -135,5 +130,9 @@ int tree_depth_rec(const Tree *pa, NodeBT *n){
     if(nRight > nLeft) return nRight + 1;
     
     return nLeft + 1;
-    
+}
+
+int tree_depth(const Tree* pa){
+    if(tree_isEmpty(pa)) return 0;
+    return tree_depth_rec(pa, ROOT(pa));
 }
