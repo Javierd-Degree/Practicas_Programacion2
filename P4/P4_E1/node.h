@@ -20,6 +20,7 @@ Node * node_setId(Node * n, const int id);
 Node * node_setName(Node * n, const char* name);
 
 Bool node_equals(const Node * n1, const Node * n2);
+int node_compare(Node *n1, Node *n2);
 Node * node_copy(const Node * src);
 
 int node_print(FILE *pf, const Node * n); 

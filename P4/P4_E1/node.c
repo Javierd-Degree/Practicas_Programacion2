@@ -64,6 +64,13 @@ Bool node_equals(const Node *n1, const Node *n2){
     return FALSE;
 }
 
+int node_compare(Node *n1, Node *n2){
+    if(n1 == NULL || n2 == NULL)
+    if(node_equals(n1, n2)) return 0;
+    if(n1->id > n2->id) return 1;
+    return -1;
+}
+
 Node *node_copy(const Node *src){
     if(src == NULL) return NULL;
     Node *n2;

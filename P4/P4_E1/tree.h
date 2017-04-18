@@ -1,6 +1,9 @@
 #ifndef TREE_H
 #define TREE_H
 
+#include "types.h"
+#include "list.h"
+
 typedef struct _Tree Tree;
 /* Tipos de los punteros a función soportados por el árbol */
 typedef void (*destroy_elementtree_function_type)(void*);

@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
-#define MAX_NAME 100
 
 int main(int argc, char** argv) {
-    char name[MAX_NAME];
+    char name[100];
     FILE *f = NULL;
     Tree *t = NULL;
     int *temp;
@@ -27,9 +26,19 @@ int main(int argc, char** argv) {
     
     while (!feof(f)){
         fscanf("%d\n", temp);
-        
+        if (!tree_insert(t, temp)) printf("Error al insertar el elemento %d", *temp);
     }
     
+    printf("Numero de nodos: %d\n", tree_numNodes(t));
+    printf("Profundidad: %d\n", tree_depth(t));
+    printf("Introduzca un numero: ");
+    fscanf("%d", temp);
+    printf("Numero introducido %d", *temp);
+    if(tree_find(t, temp)) printf("El dato %d se encuentra dentro del Arbol\n", *temp);
+    else printf("El dato %d no se encuentra dentro del Arbol\n", *temp);
+    
+    
+    tree_destroy(t);
     fclose(f);
     return (EXIT_SUCCESS);
 }
