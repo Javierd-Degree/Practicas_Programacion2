@@ -33,6 +33,7 @@ cmp_elementtree_function_type f4){
     t ->destroy_element_function = f1;
     t->print_element_function = f3;
     t->root = NULL;
+    return t;
 }
 
 NodeBT *nodeBT_ini(Tree *pa, void *info){
@@ -47,6 +48,7 @@ NodeBT *nodeBT_ini(Tree *pa, void *info){
     }
     RIGHT(n) = NULL;
     LEFT(n) = NULL;
+    return n;
 }
 
 void tree_destroy_rec(NodeBT* n, Tree* pa){
@@ -73,7 +75,7 @@ Status tree_insert_rec(Tree* pa, const void* po, NodeBT **n){
         return OK;
     }
     
-    cmp = pa->cmp_element_function(po, n);
+    cmp = pa->cmp_element_function(po, INFO(*n));
     if(cmp == -1) return tree_insert_rec(pa, po, &LEFT(*n));
     if(cmp == 1) return tree_insert_rec(pa, po, &RIGHT(*n));
     return OK;  /*Ya está insertado*/
@@ -86,12 +88,15 @@ Status tree_insert(Tree* pa, const void* po){
 }
 
 Bool tree_find_rec(Tree* pa, const void* po, const NodeBT *n){
+    int cmp;
     if(pa == NULL || po == NULL || n == NULL) return FALSE;
-    if(pa->cmp_element_function(po, INFO(n)) == 0) return TRUE;
-    if(pa->cmp_element_function(po, INFO(n)) == 1)
+    cmp = pa->cmp_element_function(po, INFO(n));
+    if(cmp == 1)
         return tree_find_rec(pa, po, RIGHT(n));
-    if(pa->cmp_element_function(po, INFO(n)) == -1)
+    else if(cmp == -1)
         return tree_find_rec(pa, po, LEFT(n));
+    else
+        return TRUE; /*cmp == 0*/
 }
 
 Bool tree_find(Tree* pa, const void* po){
