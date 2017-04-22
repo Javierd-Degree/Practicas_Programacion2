@@ -33,6 +33,7 @@ cmp_elementtree_function_type f4){
     t ->destroy_element_function = f1;
     t->print_element_function = f3;
     t->root = NULL;
+    return t;	
 }
 
 NodeBT *nodeBT_ini(Tree *pa, void *info){
@@ -47,6 +48,7 @@ NodeBT *nodeBT_ini(Tree *pa, void *info){
     }
     RIGHT(n) = NULL;
     LEFT(n) = NULL;
+    return n;
 }
 
 void tree_destroy_rec(NodeBT* n, Tree* pa){
