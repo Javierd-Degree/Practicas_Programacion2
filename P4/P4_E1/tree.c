@@ -140,5 +140,5 @@ int tree_depth_rec(const Tree *pa, NodeBT *n){
 
 int tree_depth(const Tree* pa){
     if(tree_isEmpty(pa)) return 0;
-    return tree_depth_rec(pa, ROOT(pa));
+    return tree_depth_rec(pa, ROOT(pa))-1;
 }
