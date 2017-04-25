@@ -228,7 +228,6 @@ int list_print(FILE *fd, const List* list){
     if(size == 0)return 0;
     for(i=0, nAux = FIRST(list);i<size; i++, nAux = NEXT(nAux)){
         if((n = list->print_element_function(fd, nAux->data) == -1)) return -1;
-        fprintf(fd, "\n");
         nchar = nchar +n;
     };
     return nchar;

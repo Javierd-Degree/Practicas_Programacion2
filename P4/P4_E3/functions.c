@@ -25,7 +25,7 @@ void * copy_intp_function(const void* e) {
 
 int print_intp_function(FILE * f, const void* e) {
     if (f != NULL && e != NULL)
-        return fprintf(f, "[%d]", *((int*) e));
+        return fprintf(f, "%d ", *((int*) e));
     return -1;
 }
 

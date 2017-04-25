@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #define ROOT(T) (T)->root
@@ -205,5 +206,71 @@ Status tree_postOrder(FILE* f, const Tree* pa){
 	if(f == NULL || pa == NULL) return ERROR;
 
 	s = tree_postOrderRec(f, pa, ROOT(pa));
+	return s;
+}
+
+Status tree_preOrderToListRec(List* l, const Tree* pa, const NodeBT *n){
+	Status s;
+	if(l == NULL || pa == NULL) return ERROR;
+	if(n == NULL) return OK;
+
+	list_insertLast(l, INFO(n));
+	s = tree_preOrderToListRec(l, pa, LEFT(n));
+	if(s == ERROR) return ERROR;
+	s = tree_preOrderToListRec(l, pa, RIGHT(n));
+	if(s == ERROR) return ERROR;
+	return OK;
+}
+
+Status tree_preOrderToList(List* l, const Tree* pa){
+	if(l == NULL || pa == NULL) return ERROR;
+	return tree_preOrderToListRec(l, pa, ROOT(pa));
+}
+
+Status tree_inOrderToListRec(List* l, const Tree* pa, const NodeBT *n){
+	Status s;
+	if(l == NULL || pa == NULL) return ERROR;
+	if(n == NULL) return OK;
+
+	s = tree_inOrderToListRec(l, pa, LEFT(n));
+	if(s == ERROR) return ERROR;
+
+	list_insertLast(l, INFO(n));
+
+	s = tree_inOrderToListRec(l, pa, RIGHT(n));
+	if(s == ERROR) return ERROR;
+	return OK;
+}
+
+Status tree_inOrderToList(List* l, const Tree* pa){
+	Status s;
+	if(l == NULL || pa == NULL) return ERROR;
+
+	s = tree_inOrderToListRec(l, pa, ROOT(pa));
+	return s;
+}
+
+
+Status tree_postOrderToListRec(List* l, const Tree* pa, const NodeBT *n){
+	Status s;
+	if(l == NULL || pa == NULL) return ERROR;
+	if(n == NULL) return OK;
+
+	s = tree_postOrderToListRec(l, pa, LEFT(n));
+	if(s == ERROR) return ERROR;
+	s = tree_postOrderToListRec(l, pa, RIGHT(n));
+	if(s == ERROR) return ERROR;
+	
+
+	list_insertLast(l, INFO(n));
+
+	return OK;
+}
+
+Status tree_postOrderToList(List* l, const Tree* pa){
+	Status s;
+	if(l == NULL || pa == NULL) return ERROR;
+
+	s = tree_postOrderToListRec(l, pa, ROOT(pa));
 	return s;
 }
